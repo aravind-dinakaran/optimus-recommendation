@@ -1,0 +1,48 @@
+Hi Team,
+
+I have completed the initial implementation of the recommendation container, leveraging the API provided by the Product team that retrieves recommendation data from Optimus. The experience is currently available in UAT6 for review.
+
+Example PDP:
+https://uat6www.academy.com/p/bcg-mens-essential-long-sleeve-t-shirt-137180444?sku=bright-white-small&debug=aso
+
+Note: When testing on other PDPs in UAT6, please append either `&debug=aso` or `?debug=aso` to the URL, depending on whether query parameters already exist.
+
+Our recommendation container is positioned below the Add-to-Cart section on the PDP. As a point of reference, there is also a separate recommendation container currently rendered above this location by the Product team. The custom component developed by the Ops Dev team is rendered in the lower placement.
+
+We would also like to align on a few assumptions and potential conclusions regarding the A/B testing strategy. Please review and raise any concerns or alternative recommendations.
+
+### 1. A/B Test Structure
+
+Based on our recent discussions with Tamara and team, one possible approach is to execute a single A/B test experience where:
+
+Experience A (Control): Existing site behavior with no recommendation experience injected by Monetate.
+
+Experience B (Variant): Custom recommendation component developed by the Ops Dev team, powered by the API provided by the Product team.
+
+Our understanding is that this approach would:
+
+* Enable A/B testing across all categories, classes, and subclasses through a single experience.
+* Eliminate the need to create and maintain multiple Monetate experiences.
+* Allow Analytics to segment, monitor, and report performance at the required financial class levels.
+
+Please confirm whether this aligns with everyone's expectations or if there are any concerns with this approach.
+
+### 2. Production API Requirement
+
+To support the production rollout of the Ops Dev A/B test experience, we will require the corresponding API endpoint and access in the production environment.
+
+Please let us know if there are any dependencies, considerations, or timelines we should be aware of regarding production API availability.
+
+### 3. Timeline and Rollout Alignment
+
+We would also like to confirm the expected rollout timeline and alignment on next steps.
+
+Our current understanding is that all 103 Monetate experiences will be launched on 6/11 with the required tracking attributes enabled for internal traffic only.
+
+Given that the 500-stack release is currently scheduled alongside the Vertex rollout on 6/16, we would appreciate clarification on the expected course of action should that release be delayed. Understanding any potential impact on the recommendation rollout timeline, A/B testing strategy, and related dependencies would help us plan accordingly.
+
+We would also like to confirm whether, as part of the 500-stack release, the Product team plans to launch the Optimus-powered native recommendation component across all PDPs. Understanding this rollout plan will help ensure alignment between the native recommendation experience and the proposed A/B testing approach.
+
+Additionally, our understanding is that the A/B test will be launched to both internal and external traffic following the initial evaluation and validation of Optimus performance on internal traffic. Please confirm whether this aligns with the planned rollout strategy.
+
+Thanks everyone. Looking forward to your feedback.

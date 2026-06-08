@@ -1,0 +1,39 @@
+card = every single json within the "cabSKUs" under the response json. 
+mapPrice = card.mapPrice || card.parentProduct.mapPrice
+salePrice = card.price.salePrice
+mapPriceFlag = card.mapPriceFlag
+priceValue = the value of price visually shown for the card within the recommendation container
+priceValueAbove = element shown vertically above priceValue
+priceValueRight = element shown towards the right side of priceValue
+priceValueLeft = element shown towards the left side of priceValue
+priceValueBelow = element shown towards the bottom side of priceValue
+
+if mapPriceFlag is set to "Y":
+    if salePrice < mapPrice:
+        priceValue = "Our Price In Cart"
+        textColor of priceValue = "#e81111"
+        priceValueAbove = listPrice
+        textColor of priceValueAbove = "#333333"
+        style of priceValueAbove = smaller than priceValue and a strikethrough on top
+    else
+        if salePrice < listPrice:
+            priceValue = salePrice
+            textColor of priceValue = "#e81111"
+            priceValueRight = listPrice
+            textColor of priceValueRight = "#333333"
+            style of priceValueRight = smaller than priceValue and a strikethrough on top
+        else:
+            priceValue = salePrice
+            textColor of priceValue = "#333333"
+else:
+    if salePrice < listPrice:
+            priceValue = salePrice
+            textColor of priceValue = "#e81111"
+            priceValueRight = listPrice
+            textColor of priceValueRight = "#333333"
+            style of priceValueRight = smaller than priceValue and a strikethrough on top
+        else:
+            priceValue = salePrice
+            textColor of priceValue = "#333333"
+
+            
