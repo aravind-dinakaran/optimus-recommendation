@@ -1,0 +1,1084 @@
+<!-- Rec Strategy A: Purchase and Also Purchased -->
+
+<!-- Slider Template -->
+<!-- Html template to build grid. -->
+<h2 class="mt-header"> Customers Also Bought </h2>
+<div class="mt-accordion" id="fbt-rec">
+  <div class="mt-accordion-item expanded">
+    <div class="mt-accordion-header">
+    </div>
+    <div class="mt-accordion-content"> {{SLIDER}}</div>
+  </div>
+</div>
+
+
+<!-- Item Template -->
+<!-- * Html template to build merch items. -->
+<a class="mt-link" href="{{childLink}}" rel="nofollow" data-pid="{{id}}" data-omni="pdp_rec_db_app_mensbcgclothing">
+  <% if (badge!=null) {%>
+    <div class="mt-badge" data-badge="{{badge}}">{{badge}}</div>
+    <% } %>
+      <img class="mt-image" src="{{imageLink}}" alt="{{id}} - {{title}}">
+      <% if (rating !='0' && reviewCount !='0' ) { %>
+        <div class="mt-product-review">
+          <div class="mt-star-rating">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M5.50038 7.81182L8.59017 9.71765L7.7721 6.12206L10.5 3.70438L6.90344 3.38922L5.50038 0L4.0958 3.38922L0.5 3.70586L3.2279 6.12355L2.40984 9.71914L5.50038 7.81182Z"
+                fill="#F2CF56" />
+            </svg>
+            {{rating}} ({{reviewCount}})
+          </div>
+        </div>
+        <% } else { %>
+          <div class="mt-product-review">
+            <div class="mt-star-rating">
+              &nbsp;
+            </div>
+          </div>
+          <% } %>
+            <div class="mt-title">{{title}}</div>
+            <div class="mt-prices">
+              <span class="mt-sale-price">{{salePrice|priceFormat: $1,000.00}}</span>
+              <span class="mt-price">{{price|priceFormat: $1,000.00}}</span>
+            </div>
+</a>
+<a href="{{childLink}}" rel="nofollow" data-omni="pdp_rec_db_app_mensbcgclothing" class="mt-button" data-pid="{{id}}"
+  data-brand="{{ brand }}" data-product-type="{{ productType2 }}" data-parentsku="{{ itemGroupId }}"
+  data-childsku="{{id}}" data-productid="{{productId}}">
+  Add To Cart
+</a>
+
+<style>
+  /** MAIN CONTAINER **/
+  #MONETATE-ID {
+    position: relative;
+    text-align: center;
+    margin: 20px 0px;
+    border: 1px solid #CCCCCC;
+    padding: 15px 0 0;
+    border-radius: 4px;
+  }
+
+
+  /** SLIDER MASK TO HIDE ITEMS OUTSIDE OF IT **/
+  #MONETATE-ID [data-slider-mask] {
+    overflow: hidden;
+    /* otherwise it's not a mask */
+    width: 100%;
+    position: relative;
+  }
+
+  /** SLIDER CONTAINING ALL ELEMENTS **/
+  #MONETATE-ID [data-slider] {
+    display: flex;
+    flex: auto;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    transform: none !important;
+    margin: 0;
+    padding: 30px 0 15px 0;
+    overflow-y: hidden;
+  }
+
+  #MONETATE-ID [data-slider]::-webkit-scrollbar-thumb {
+    background-color: #b2b2b2;
+    border-radius: 3px;
+  }
+
+  #MONETATE-ID [data-slider]::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+
+  #MONETATE-ID [data-slider]::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  /** INDIVIDUAL SLIDES **/
+  #MONETATE-ID [data-slide] {
+    display: inline-flex !important;
+    list-style: none;
+    white-space: nowrap;
+    width: 119.5px !important;
+    flex: 0 0 calc(100% / 4);
+    padding: 0 15px;
+  }
+
+  #MONETATE-ID .mt-header {
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 19.55px;
+    text-align: center;
+    color: #003366;
+    text-transform: uppercase;
+  }
+
+  #MONETATE-ID [data-slide] .mt-link {
+    text-decoration: none;
+    /* no underline */
+    display: block;
+  }
+
+  #MONETATE-ID [data-slide] .mt-image {
+    width: 88px;
+    height: 88px;
+  }
+
+  #MONETATE-ID .mt-title {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: left;
+    color: #333333;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 50px;
+    max-width: 96px;
+    white-space: normal;
+  }
+
+  #MONETATE-ID .mt-prices {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14.58px;
+    text-align: left;
+    color: #003366;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  #MONETATE-ID .mt-price {
+    text-decoration: line-through;
+    /* strikethrough price */
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14.58px;
+    text-align: left;
+    color: #666666;
+    margin-left: 8px;
+  }
+
+  #MONETATE-ID .mt-sale-price {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14.58px;
+    text-align: left;
+    color: #D60000;
+  }
+
+  #MONETATE-ID [data-missing-keys*="salePrice"] .mt-price {
+    text-decoration: none;
+    /* don't strikeththrough if there's no sale price */
+    color: #003366;
+    margin-left: 0;
+  }
+
+
+  /** NEXT AND PREVIOUS BUTTONS **/
+  #MONETATE-ID [data-prev-button],
+  #MONETATE-ID [data-next-button] {
+    position: absolute;
+    top: 45%;
+    /* kind of in the middle. Tweak if big image or icon */
+    font-size: 25px;
+    /* make it big if there's no image */
+    cursor: pointer;
+    /* we want the pointer */
+    z-index: 1;
+    /* above the rest of the slider */
+    color: #000;
+    outline: 0;
+    /* we use a button for accessibility, but we don't want button styling */
+    border: 0;
+    width: 50px;
+    /* set the width in case the image is big */
+  }
+
+  #MONETATE-ID [data-prev-button] img,
+  #MONETATE-ID [data-next-button] img {
+    position: absolute;
+    /* put the image above any text if the is one */
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  #MONETATE-ID [data-prev-button][disabled],
+  #MONETATE-ID [data-next-button][disabled] {
+    opacity: 0.5;
+    /* show the disabled buttons with opacity */
+  }
+
+  #MONETATE-ID [data-prev-button] {
+    left: 0;
+    /* position the buttons */
+  }
+
+  #MONETATE-ID [data-next-button] {
+    right: 0;
+    /* position the buttons */
+  }
+
+  /** PAGINATION DOTS **/
+  #MONETATE-ID ul[data-pagination] {
+    margin: 30px 0 0 0;
+    display: flex;
+    background: #C2C2C2;
+    height: 3px;
+    width: 100%;
+    cursor: pointer;
+    padding: 0;
+    visibility: hidden;
+  }
+
+  #MONETATE-ID [data-pagination-slide] {
+    height: 2px;
+    text-indent: -9999px;
+    /* hide the text. Remove for numbers */
+    flex-grow: 1;
+    height: 3px;
+    background: #B2B2B2;
+    list-style: none;
+    opacity: 0;
+  }
+
+  #MONETATE-ID [data-pagination-slide][data-slide-active] {
+    opacity: 1;
+    /* show full when active */
+  }
+
+  #MONETATE-ID[data-slider-wrapper="fade"] [data-slide][data-slide-active] {
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+  }
+
+  /**
+ * VERTICAL, FADE AND THUMBNAIL PAGINATION
+ */
+  #MONETATE-ID[data-slider-wrapper="vertical"] [data-slider-mask] {
+    touch-action: auto;
+    height: auto;
+  }
+
+  #MONETATE-ID[data-slider-wrapper="fade"] [data-slider-mask] {
+    position: relative;
+  }
+
+  #MONETATE-ID[data-slider-wrapper="vertical"] [data-slider],
+  #MONETATE-ID[data-slider-wrapper="fade"] [data-slider] {
+    white-space: normal;
+  }
+
+  #MONETATE-ID[data-slider-wrapper="vertical"] [data-slide],
+  #MONETATE-ID[data-slider-wrapper="fade"] [data-slide] {
+    display: block;
+    vertical-align: baseline;
+    height: auto !important;
+    position: relative;
+  }
+
+  #MONETATE-ID[data-slider-wrapper="fade"] [data-slide] {
+    position: absolute;
+    top: 0;
+    opacity: 0;
+  }
+
+  #MONETATE-ID[data-slider-wrapper="fade"] [data-slide][data-slide-active] {
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+  }
+
+  #MONETATE-ID[data-slider-wrapper="vertical"] [data-prev-button] {
+    top: 0;
+    left: 50%;
+    transform: translateX(-33%);
+  }
+
+  #MONETATE-ID[data-slider-wrapper="vertical"] [data-next-button] {
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    transform: translateX(-33%);
+  }
+
+  #MONETATE-ID [data-pagination="thumbnails"] [data-pagination-slide] {
+    border-radius: 0;
+    background: none;
+    width: 40px;
+    height: auto;
+    text-indent: 0;
+  }
+
+  #MONETATE-ID .mt-star-rating {
+    display: inline-block;
+    position: relative;
+    height: 22px;
+    color: #0255CC;
+  }
+
+  #MONETATE-ID .mt-blankstar {
+    height: 22px;
+    display: inline-block;
+    width: 100%;
+  }
+
+  #MONETATE-ID .mt-star-rating .mt-fillstar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  #MONETATE-ID .mt-star-rating svg {
+    display: inline-block;
+  }
+
+  #MONETATE-ID .mt-review {
+    display: inline-block;
+  }
+
+  #MONETATE-ID .mt-product-review {
+    margin-top: 10px;
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14.4px;
+    text-align: left;
+  }
+
+  #MONETATE-ID .mt-button {
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16.8px;
+    background: transparent;
+    color: #0066CC;
+    padding: 6px 10px 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #0066CC;
+    display: block;
+    margin: 0;
+  }
+
+  #MONETATE-ID .mt-badge[data-badge='hot deal'] {
+    background: #D60000 !important;
+    color: #ffff !important;
+    border-color: #D60000 !important;
+    padding: 4px 8px;
+    letter-spacing: 0.05rem;
+  }
+
+  #MONETATE-ID .mt-badge[data-badge='hot deal']::before {
+    content: url('data:image/svg+xml,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23clip0_789_877)"><path d="M11.6993 2.78034C11.6993 2.78034 11.6993 2.78034 11.6928 2.78034C11.6732 2.76066 11.647 2.75411 11.6274 2.74099C11.6013 2.72132 11.5752 2.70165 11.5425 2.69509C11.5359 2.69509 11.5229 2.69509 11.5098 2.69509C11.464 2.68198 11.4183 2.67542 11.3725 2.67542C11.3595 2.67542 11.3464 2.67542 11.3333 2.68198C11.2876 2.68198 11.2418 2.69509 11.2026 2.7082C11.1895 2.7082 11.183 2.72132 11.1699 2.72788C11.1372 2.74755 11.098 2.76066 11.0719 2.78689C11.0719 2.78689 11.0719 2.79345 11.0654 2.80001C11.0457 2.81312 11.0392 2.83935 11.0261 2.85247C11.0065 2.8787 10.9804 2.91148 10.9673 2.94427C10.9673 2.94427 10.9673 2.95083 10.9608 2.95739C10.9542 2.97706 10.9608 2.99673 10.9542 3.02296C10.9542 3.04919 10.9412 3.06886 10.9346 3.09509C10.9346 3.09509 10.9346 3.10165 10.9346 3.1082C10.9346 3.13443 10.9477 3.16066 10.9477 3.18034C10.9542 3.20657 10.9608 3.23935 10.9738 3.26558C11.1699 3.65247 11.2222 4.07214 11.1503 4.4787C10.4379 2.60984 8.99999 1.02952 7.03921 0.0524668C7.03267 0.0524668 7.02613 0.0524668 7.0196 0.0524668C6.99999 0.0459094 6.97385 0.0393521 6.95424 0.0327947C6.91502 0.0196799 6.88234 0.0131226 6.84313 0.0131226C6.84313 0.0131226 6.83006 0.0131226 6.82352 0.0131226C6.80391 0.0131226 6.79084 0.0196799 6.77777 0.0196799C6.73855 0.0196799 6.70587 0.0262373 6.66666 0.0393521C6.64705 0.0459094 6.62744 0.0590242 6.6013 0.0655816C6.57515 0.0786963 6.54247 0.0983685 6.51633 0.118041C6.49672 0.137713 6.47712 0.157385 6.46404 0.177057C6.45097 0.190172 6.43136 0.203286 6.42483 0.216401C6.42483 0.222959 6.42483 0.236073 6.41829 0.242631C6.40522 0.26886 6.39868 0.288532 6.39215 0.314762C6.38561 0.340991 6.37908 0.367221 6.37254 0.400008C6.37254 0.413123 6.37254 0.41968 6.37254 0.426237C6.37254 2.19017 5.79738 3.93443 4.75163 5.42952C4.56208 5.02296 4.32025 4.64263 4.01306 4.30165C4.01306 4.30165 4.00653 4.28853 3.99999 4.28853C3.97385 4.2623 3.9477 4.24919 3.91502 4.22952C3.89542 4.2164 3.88234 4.20329 3.86927 4.19673C3.7647 4.14427 3.64051 4.13116 3.52287 4.16394C3.47712 4.17706 3.43136 4.19673 3.39215 4.22296C3.38561 4.22296 3.37254 4.22296 3.366 4.23607C3.2745 4.30165 3.20914 4.40657 3.19607 4.5246C3.07842 5.54099 2.73202 6.51804 2.17646 7.4164C1.22875 8.94427 1.09149 10.8262 1.81698 12.4525C2.60783 14.2295 4.39868 15.5935 6.49019 16.0197C6.52287 16.0197 6.55555 16.0262 6.58823 16.0262C6.63398 16.0262 6.68627 16.0197 6.73202 16.0066C6.75163 16 6.77123 15.9869 6.79738 15.9803C6.81698 15.9738 6.83659 15.9672 6.84966 15.9541C6.84966 15.9541 6.84966 15.9541 6.8562 15.9475C6.90195 15.9148 6.9477 15.8754 6.97385 15.8295C6.97385 15.8295 6.97385 15.8295 6.97385 15.823C6.99999 15.7836 7.0196 15.7443 7.03267 15.6984V15.6853C7.03267 15.6853 7.03267 15.6787 7.03267 15.6721C7.03267 15.6525 7.03267 15.6328 7.03267 15.6131C7.03267 15.5803 7.03267 15.5541 7.03267 15.5279C7.03267 15.5016 7.01306 15.482 7.00653 15.4557C6.99999 15.4361 6.99346 15.4164 6.98038 15.3967L6.96731 15.3836C6.96731 15.3771 6.96731 15.3705 6.95424 15.3639C6.24182 14.4721 6.1111 13.2918 6.60783 12.2885C6.7647 11.9803 6.87581 11.659 6.97385 11.3377C7.01306 11.5607 7.03267 11.7902 7.00653 12.0262C7.00653 12.0459 7.00653 12.059 7.00653 12.0721C7.00653 12.0853 7.00653 12.0984 7.00653 12.1115C7.00653 12.1246 7.01306 12.1312 7.0196 12.1377C7.0196 12.1705 7.03921 12.1967 7.05228 12.2295C7.06535 12.2492 7.07189 12.2689 7.08496 12.2885C7.08496 12.2951 7.09149 12.3082 7.09803 12.3148C7.1111 12.3279 7.13071 12.3344 7.14378 12.3475C7.15685 12.3607 7.16993 12.3803 7.18953 12.3934C7.20261 12.4 7.21568 12.4066 7.22875 12.4131C7.24182 12.4197 7.25489 12.4262 7.26796 12.4328C7.30718 12.4525 7.35293 12.4656 7.39868 12.4721C7.41176 12.4721 7.41829 12.4787 7.43136 12.4787H7.47058C7.53594 12.4787 7.59476 12.4656 7.65359 12.4394C7.67319 12.4328 7.68627 12.4197 7.69934 12.4131C7.73855 12.3934 7.77123 12.3672 7.79738 12.341C7.80391 12.3344 7.81698 12.3279 7.82352 12.3213C8.51633 11.5344 8.86274 10.5705 8.8562 9.60001C10.1242 11.3049 10.1961 13.5803 8.90849 15.3639C8.90195 15.3771 8.89542 15.3902 8.88888 15.4033C8.88888 15.4164 8.86927 15.423 8.86274 15.4361C8.86274 15.4492 8.86274 15.4623 8.84966 15.4754C8.84313 15.5016 8.83659 15.5279 8.83006 15.5541C8.83006 15.5803 8.83006 15.6066 8.83006 15.6328C8.83006 15.6459 8.83006 15.6656 8.83006 15.6787C8.83006 15.6918 8.84313 15.6984 8.84313 15.7115C8.84313 15.7246 8.84313 15.7377 8.84966 15.7508C8.8562 15.7771 8.87581 15.7967 8.88888 15.8164C8.89542 15.8295 8.90195 15.8361 8.90849 15.8492C8.94117 15.8885 8.98038 15.9279 9.02613 15.9541C9.02613 15.9541 9.03267 15.9541 9.03921 15.9541C9.1111 15.9935 9.183 16.0131 9.26797 16.0131C9.32025 16.0131 9.37254 16.0066 9.41829 15.9869C12.4706 15.0033 14.5294 12.4984 14.6601 9.60656C14.7778 7.07542 13.6993 4.59017 11.6993 2.79345V2.78034ZM10.281 14.6885C11.2941 12.3279 10.5817 9.56722 8.366 7.8623C8.3464 7.84919 8.32679 7.84263 8.30718 7.82952C8.28104 7.8164 8.26143 7.80329 8.23529 7.79017C8.20261 7.77706 8.16993 7.77706 8.13725 7.7705C8.1111 7.7705 8.09149 7.76394 8.06535 7.76394C8.02613 7.76394 7.99346 7.7705 7.96078 7.78361C7.94117 7.78361 7.9281 7.78361 7.90849 7.79017C7.90849 7.79017 7.90195 7.79017 7.89542 7.79673C7.8562 7.80984 7.82352 7.83607 7.79084 7.8623C7.77777 7.87542 7.75816 7.88197 7.74509 7.89509C7.74509 7.89509 7.73855 7.89509 7.73202 7.90165C7.70587 7.92788 7.6928 7.96066 7.67319 7.98689C7.66666 8.00001 7.65359 8.01312 7.64705 8.02624C7.64705 8.02624 7.64705 8.02624 7.64705 8.03279C7.63398 8.05902 7.63398 8.08525 7.63398 8.11148C7.63398 8.13771 7.62091 8.16394 7.62091 8.19673C7.62091 8.19673 7.62091 8.20329 7.62091 8.20984C7.62091 8.22952 7.63398 8.24919 7.64051 8.26886C7.64051 8.29509 7.64051 8.32132 7.66012 8.34755C7.99346 9.09509 8.01306 9.9082 7.75163 10.6557C7.61437 10.2492 7.39868 9.8623 7.10457 9.51476C7.10457 9.51476 7.09149 9.5082 7.08496 9.50165C7.06535 9.48197 7.03921 9.4623 7.01306 9.44263C6.98692 9.42951 6.96731 9.40984 6.94117 9.39673C6.91502 9.38361 6.89542 9.38361 6.86927 9.3705C6.83659 9.36394 6.80391 9.35738 6.77123 9.35083C6.75816 9.35083 6.75163 9.35083 6.74509 9.35083C6.72548 9.35083 6.71241 9.35738 6.6928 9.35738C6.66012 9.35738 6.62744 9.36394 6.59476 9.37706C6.56862 9.38361 6.54247 9.39673 6.51633 9.40984C6.49672 9.4164 6.48365 9.42296 6.46404 9.42952C6.45751 9.43607 6.45097 9.44919 6.4379 9.45574C6.41176 9.47542 6.39868 9.49509 6.37908 9.52132C6.35947 9.54099 6.3464 9.56066 6.33332 9.58689C6.32025 9.61312 6.31372 9.63935 6.30718 9.66558C6.30718 9.68525 6.28757 9.69837 6.28757 9.7246C6.28757 9.73115 6.28757 9.74427 6.28757 9.75083C6.28757 9.75738 6.28757 9.76394 6.28757 9.77706C6.28757 10.5115 6.11764 11.2262 5.77777 11.8951C5.30718 12.8328 5.2745 13.8951 5.64705 14.8459C4.30718 14.3082 3.20261 13.3246 2.65359 12.0984C2.03921 10.7148 2.15032 9.1082 2.96078 7.80984C3.37908 7.13443 3.67973 6.41968 3.87581 5.6787C3.99346 5.92132 4.09149 6.17706 4.15032 6.43279C4.15685 6.47214 4.17646 6.50493 4.19607 6.53771C4.19607 6.54427 4.20261 6.55738 4.20914 6.56394C4.24182 6.60984 4.2745 6.64919 4.32025 6.67542C4.32025 6.67542 4.32025 6.68197 4.32679 6.68197C4.35293 6.70165 4.37908 6.7082 4.40522 6.72132C4.41829 6.72132 4.43136 6.73443 4.44444 6.74099C4.49019 6.75411 4.54247 6.76722 4.59476 6.76722C4.62091 6.76722 4.65359 6.76722 4.68627 6.76066C4.70587 6.76066 4.72548 6.74099 4.75163 6.73443C4.77777 6.72788 4.80391 6.71476 4.82352 6.7082C4.8562 6.68853 4.88888 6.66886 4.91502 6.64263C4.9281 6.62952 4.9477 6.62296 4.96078 6.60984C6.29411 5.03607 7.09149 3.12132 7.25489 1.15411C9.01306 2.23607 10.2157 3.88853 10.5882 5.77706C10.5948 5.8164 10.6144 5.84919 10.634 5.88853C10.634 5.89509 10.634 5.9082 10.647 5.91476C10.6732 5.96066 10.7124 6.00001 10.7582 6.03279C10.7582 6.03279 10.7582 6.03279 10.7647 6.03935C10.7908 6.05247 10.817 6.06558 10.8431 6.0787C10.8562 6.08525 10.8693 6.09837 10.8889 6.09837C10.9346 6.11148 10.9869 6.1246 11.0392 6.1246C11.0654 6.1246 11.0915 6.1246 11.1176 6.1246C11.1372 6.1246 11.1569 6.11148 11.183 6.10493C11.2091 6.09837 11.2418 6.09181 11.268 6.07214C11.3006 6.05247 11.3268 6.03279 11.3529 6.00656C11.366 5.99345 11.3856 5.98689 11.3987 5.97378C11.4052 5.96066 11.4183 5.94755 11.4248 5.94099C11.7908 5.5082 12.0131 5.0164 12.0784 4.49837C13.2287 5.97378 13.8366 7.75738 13.7516 9.56722C13.647 11.7246 12.3268 13.6328 10.2876 14.6951L10.281 14.6885Z" fill="white"/></g><defs><clipPath id="clip0_789_877"><rect width="13.3333" height="16" fill="white" transform="translate(1.33325)"/></clipPath></defs></svg>');
+    left: 1.33px;
+    gap: 0px;
+    height: 16px;
+  }
+
+  #MONETATE-ID .mt-badge[data-badge='clearance']::before {
+    content: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_790_770)'%3E%3Cpath d='M15.8626 0.137297C15.6796 -0.0457655 15.3827 -0.0457655 15.1997 0.137297L13.8344 1.50261C13.7504 1.46261 13.6619 1.43039 13.5694 1.40729L9.32657 0.359077C8.85013 0.239984 8.33838 0.381702 7.9911 0.728983L0.41121 8.29641C-0.13707 8.84472 -0.13707 9.7369 0.41121 10.2852L5.71473 15.5887C6.26304 16.137 7.15523 16.1371 7.70357 15.5887L15.271 8.00881C15.6183 7.66153 15.76 7.14978 15.6409 6.67332L14.5927 2.43051C14.5696 2.33807 14.5374 2.24948 14.4974 2.16554L15.8627 0.800233C16.0457 0.617171 16.0457 0.320359 15.8626 0.137297ZM14.7313 6.90075C14.771 7.05956 14.7237 7.23013 14.608 7.34591L7.04057 14.9258C6.85779 15.1086 6.56039 15.1086 6.37761 14.9258L1.07412 9.62228C0.891334 9.4395 0.891334 9.14209 1.07412 8.95931L8.65404 1.39192C8.74269 1.30326 8.86351 1.25479 8.98657 1.25479C9.02419 1.25479 9.06204 1.25933 9.09919 1.26861L13.0845 2.25245L11.9556 3.38135C11.4329 3.13242 10.7873 3.22373 10.3553 3.65579C9.80694 4.20413 9.80694 5.09629 10.3553 5.64463C10.6294 5.91879 10.9896 6.05588 11.3497 6.05588C11.7098 6.05588 12.0699 5.91882 12.3441 5.64463C12.7762 5.21251 12.8675 4.56694 12.6185 4.04429L13.7474 2.91538L14.7313 6.90075ZM11.6812 4.98172C11.4984 5.16447 11.201 5.16451 11.0182 4.98172C10.8355 4.79898 10.8355 4.50154 11.0182 4.31879C11.1096 4.22738 11.2296 4.18173 11.3497 4.18173C11.4697 4.18173 11.5898 4.22741 11.6811 4.31876L11.6811 4.31879L11.6812 4.31882C11.8639 4.50157 11.8639 4.79898 11.6812 4.98172Z' fill='%23333333'/%3E%3Cpath d='M7.70352 5.64469C7.15521 5.09638 6.26302 5.09638 5.71468 5.64469C5.1664 6.193 5.1664 7.08519 5.71468 7.63353C6.26299 8.18184 7.15521 8.18184 7.70352 7.63353C8.25186 7.08519 8.25186 6.19304 7.70352 5.64469ZM7.04061 6.97057C6.85783 7.15335 6.56043 7.15335 6.37768 6.97057C6.19493 6.78778 6.19486 6.49038 6.37764 6.30763C6.56043 6.12488 6.8578 6.12485 7.04061 6.30763C7.22336 6.49038 7.22336 6.78778 7.04061 6.97057Z' fill='%23333333'/%3E%3Cpath d='M8.36637 10.2852C7.81678 9.73561 6.92725 9.73555 6.37757 10.2852C5.82922 10.8335 5.82922 11.7257 6.37757 12.274C6.92719 12.8236 7.81672 12.8237 8.36637 12.274C8.91472 11.7257 8.91472 10.8335 8.36637 10.2852ZM7.70344 11.6111C7.52028 11.7943 7.22369 11.7943 7.0405 11.6111C6.85775 11.4284 6.85775 11.1309 7.0405 10.9482C7.22369 10.765 7.52025 10.765 7.70344 10.9482C7.88619 11.1309 7.88619 11.4283 7.70344 11.6111Z' fill='%23333333'/%3E%3Cpath d='M10.4898 8.57612C10.4612 8.31881 10.2294 8.13337 9.97211 8.16197L4.00569 8.8249C3.74838 8.8535 3.56294 9.08525 3.59153 9.34259C3.61819 9.58231 3.82113 9.75965 4.05687 9.75965C4.07416 9.75965 4.09166 9.75868 4.10922 9.75675L10.0757 9.09381C10.333 9.06518 10.5184 8.83343 10.4898 8.57612Z' fill='%23333333'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_790_770'%3E%3Crect width='16' height='16' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+    height: 16px;
+  }
+
+  #MONETATE-ID .mt-badge[data-badge='clearance'] {
+    background: #F2CF56 !important;
+    padding: 4px 8px;
+    color: #333333 !important;
+    border: transparent !important;
+  }
+
+  #MONETATE-ID[data-slider-wrapper='vertical'] [data-slide] .mt-badge {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    font-family: Open Sans;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 13.2px;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 4px 8px;
+    border-radius: 8px;
+    gap: 4px;
+    opacity: 0px;
+    text-transform: uppercase;
+    top: -25px;
+    z-index: 99999;
+    border: 1px solid #1eaa1e;
+    color: #333;
+    background: transparent;
+    left: 5px;
+    height: 24px;
+  }
+
+  #MONETATE-ID li {
+    list-style: none;
+  }
+
+
+  #MONETATE-ID[data-slider-wrapper='vertical'] [data-slide]:last-of-type {
+    margin-right: 0;
+  }
+
+  @media (max-width: 1024px) {
+    #MONETATE-ID [data-slide] {
+      width: min-content !important;
+    }
+
+    #MONETATE-ID [data-pagination-slide] {
+      visibility: visible;
+      display: inline-flex;
+      margin-left: 0px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    #MONETATE-ID {
+      border-bottom: 1px solid #CCCCCC;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-radius: 0;
+    }
+
+    #MONETATE-ID [data-pagination-slide] {
+      visibility: hidden !important;
+    }
+
+    #MONETATE-ID .mt-header {
+      text-align: left;
+      line-height: 21.6px;
+    }
+
+    .mt-accordion-item {
+      width: 100%;
+    }
+
+    .mt-accordion-header {
+      cursor: pointer;
+    }
+
+    .mt-accordion-header::after {
+      content: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12.7072 5.29616C13.0973 5.68586 13.0974 6.31786 12.7076 6.70778L8.78187 10.6328C8.39189 11.0226 7.75961 11.0226 7.36963 10.6328C6.97965 10.243 6.97965 9.61097 7.36963 9.22116L11.2949 5.29655C11.6848 4.90663 12.3171 4.90646 12.7072 5.29616Z' fill='%236A6A6A'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.29248 5.29236C3.68246 4.90255 4.31474 4.90255 4.70472 5.29236L8.70931 9.29621C9.09918 9.68613 9.099 10.3181 8.70892 10.7078C8.31883 11.0975 7.68655 11.0974 7.29668 10.7074L3.29248 6.70398C2.90251 6.31417 2.90251 5.68217 3.29248 5.29236Z' fill='%236A6A6A'/%3E%3C/svg%3E");
+      /* Downward arrow */
+      position: absolute;
+      right: 20px;
+      top: 15px;
+    }
+
+    .mt-accordion-item.expanded .mt-accordion-header::after {
+      content: url("data:image/svg+xml,%3Csvg width='17' height='16' viewBox='0 0 17 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.30946 10.7038C2.91736 10.3141 2.91718 9.68214 3.30906 9.29222L7.255 5.36722C7.64699 4.97741 8.28253 4.97741 8.67451 5.36722C9.0665 5.75703 9.0665 6.38903 8.67451 6.77884L4.72898 10.7034C4.3371 11.0934 3.70156 11.0935 3.30946 10.7038Z' fill='%236A6A6A'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12.7729 10.7076C12.3809 11.0975 11.7454 11.0975 11.3534 10.7076L7.32816 6.70379C6.93628 6.31387 6.93645 5.68186 7.32855 5.29216C7.72064 4.90246 8.35618 4.90263 8.74806 5.29255L12.7729 9.29602C13.1649 9.68583 13.1649 10.3178 12.7729 10.7076Z' fill='%236A6A6A'/%3E%3C/svg%3E");
+      /* Upward arrow */
+      position: absolute;
+      right: 20px;
+      top: 15px;
+    }
+
+    .mt-accordion-content {
+      padding: 10px 0;
+      display: block;
+      height: 135px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .mt-accordion-item.expanded .mt-accordion-content {
+      display: inline-block;
+      height: auto;
+    }
+
+    #MONETATE-ID [data-slide] {
+      flex: 0 0 119.5px;
+    }
+  }
+
+  @media (max-width: 414px) {
+    #MONETATE-ID [data-slide] {
+      width: auto !important;
+    }
+
+    #MONETATE-ID [data-pagination-slide] {
+      visibility: visible !important;
+      display: inline-flex;
+      margin: 0 12px;
+    }
+
+    #MONETATE-ID .mt-header {
+      margin-left: 8px;
+    }
+
+    #MONETATE-ID ul[data-pagination] {
+      width: 50%;
+    }
+
+    #MONETATE-ID {
+      border-bottom: 1px solid #CCCCCC;
+      border-radius: 0;
+    }
+
+    .mt-accordion-header {
+      cursor: pointer;
+    }
+
+    .mt-accordion-header::after {
+      content: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12.7072 5.29616C13.0973 5.68586 13.0974 6.31786 12.7076 6.70778L8.78187 10.6328C8.39189 11.0226 7.75961 11.0226 7.36963 10.6328C6.97965 10.243 6.97965 9.61097 7.36963 9.22116L11.2949 5.29655C11.6848 4.90663 12.3171 4.90646 12.7072 5.29616Z' fill='%236A6A6A'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.29248 5.29236C3.68246 4.90255 4.31474 4.90255 4.70472 5.29236L8.70931 9.29621C9.09918 9.68613 9.099 10.3181 8.70892 10.7078C8.31883 11.0975 7.68655 11.0974 7.29668 10.7074L3.29248 6.70398C2.90251 6.31417 2.90251 5.68217 3.29248 5.29236Z' fill='%236A6A6A'/%3E%3C/svg%3E");
+      position: absolute;
+      right: 5px;
+      top: 18px;
+    }
+
+    .mt-accordion-item.expanded .mt-accordion-header::after {
+      content: url("data:image/svg+xml,%3Csvg width='17' height='16' viewBox='0 0 17 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.30946 10.7038C2.91736 10.3141 2.91718 9.68214 3.30906 9.29222L7.255 5.36722C7.64699 4.97741 8.28253 4.97741 8.67451 5.36722C9.0665 5.75703 9.0665 6.38903 8.67451 6.77884L4.72898 10.7034C4.3371 11.0934 3.70156 11.0935 3.30946 10.7038Z' fill='%236A6A6A'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12.7729 10.7076C12.3809 11.0975 11.7454 11.0975 11.3534 10.7076L7.32816 6.70379C6.93628 6.31387 6.93645 5.68186 7.32855 5.29216C7.72064 4.90246 8.35618 4.90263 8.74806 5.29255L12.7729 9.29602C13.1649 9.68583 13.1649 10.3178 12.7729 10.7076Z' fill='%236A6A6A'/%3E%3C/svg%3E");
+      position: absolute;
+      right: 5px;
+      top: 18px;
+    }
+
+    .mt-accordion-content {
+      padding: 0px;
+      display: block;
+      height: 128px;
+      overflow: hidden;
+    }
+
+    .mt-accordion-item.expanded .mt-accordion-content {
+      display: inline-block;
+      height: auto;
+    }
+  }
+
+  #MONETATE-ID a.mt-button:hover {
+    text-decoration: none;
+    color: #004080;
+    border: 1px solid #004080;
+  }
+
+  .mt-accordion-item.expanded {
+    overflow-y: auto;
+  }
+
+  /** Optimus-style product card overrides **/
+  #MONETATE-ID,
+  #MONETATE-ID * {
+    box-sizing: border-box;
+  }
+
+  #MONETATE-ID {
+    padding-left: 10px;
+  }
+
+  #MONETATE-ID [data-slider] {
+    align-items: stretch;
+    gap: clamp(24px, 1.9324vw, 32px);
+    padding: 35px clamp(8px, 0.9662vw, 16px) clamp(8px, 0.906vw, 15px);
+    scroll-snap-type: x proximity;
+  }
+
+  #MONETATE-ID [data-slide] {
+    position: relative;
+    display: flex !important;
+    flex: 0 0 31%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    min-width: 120px;
+    max-width: 132px;
+    width: auto !important;
+    padding: 0;
+    white-space: normal;
+    scroll-snap-align: start;
+  }
+
+  #MONETATE-ID [data-slide]:not(:last-child)::after {
+    content: '+';
+    position: absolute;
+    top: 40%;
+    right: calc(clamp(24px, 1.9324vw, 32px) / -2);
+    z-index: 1;
+    color: #333333;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1;
+    transform: translate(50%, -50%);
+  }
+
+  #MONETATE-ID .mt-merch-item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+
+  #MONETATE-ID [data-slide] .mt-link {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #MONETATE-ID [data-slide] .mt-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    margin: 0 auto clamp(8px, 0.4831vw, 8px);
+    object-fit: contain;
+  }
+
+  #MONETATE-ID .mt-product-review {
+    min-height: clamp(16px, 1.2077vw, 20px);
+    margin: 0 0 clamp(4px, 0.3623vw, 6px);
+    color: #333333;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: left;
+  }
+
+  #MONETATE-ID .mt-star-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: auto;
+    color: #1946C8;
+  }
+
+  #MONETATE-ID .mt-star-rating svg {
+    flex: 0 0 auto;
+  }
+
+  #MONETATE-ID .mt-title {
+    display: -webkit-box;
+    min-height: calc(clamp(12px, 0.8454vw, 14px) * 1.2 * 3 + 2px);
+    min-height: calc(3lh + 2px);
+    max-width: none;
+    margin: 0 0 clamp(8px, 0.4831vw, 8px);
+    overflow: hidden;
+    color: #333333;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: clamp(12px, 0.8454vw, 14px);
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: left;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  #MONETATE-ID .mt-prices {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    height: auto;
+    margin: 0;
+    margin-top: auto;
+    color: #333333;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: clamp(12px, 0.8454vw, 14px);
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: left;
+  }
+
+  #MONETATE-ID .mt-sale-price {
+    color: #e81111;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: clamp(12px, 0.8454vw, 14px);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  #MONETATE-ID .mt-price {
+    margin-left: 0;
+    color: #333333;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: clamp(12px, 0.7246vw, 12px);
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: line-through;
+  }
+
+  #MONETATE-ID [data-missing-keys*="salePrice"] .mt-sale-price {
+    display: none;
+  }
+
+  #MONETATE-ID [data-missing-keys*="salePrice"] .mt-price {
+    color: #333333;
+    font-size: clamp(12px, 0.8454vw, 14px);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  #MONETATE-ID .mt-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: clamp(30px, 1.8116vw, 30px);
+    width: 100%;
+    margin: clamp(8px, 0.4831vw, 8px) 0 0;
+    padding: clamp(6px, 0.4831vw, 8px) clamp(8px, 0.6039vw, 10px);
+    border: 1px solid #1946C8;
+    border-radius: 4px;
+    background: transparent;
+    color: #1946C8;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: clamp(12px, 1.5vw, 14px);
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  #MONETATE-ID .mt-button:hover {
+    border-color: #004080;
+    color: #004080;
+    text-decoration: none;
+  }
+
+  #MONETATE-ID .mt-badge {
+    position: absolute;
+    top: -24px;
+    left: 0;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    padding: 3px 8px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  #MONETATE-ID .mt-badge[data-badge='hot deal'] {
+    gap: 2px;
+    background: #e81111 !important;
+    color: #ffffff !important;
+  }
+
+  #MONETATE-ID .mt-badge[data-badge*='new' i] {
+    background: #cfe0ff !important;
+    border-color: #cfe0ff !important;
+    color: #1946C8 !important;
+  }
+
+  #MONETATE-ID .mt-badge[data-badge='clearance'] {
+    gap: 4px;
+    background: #ffe700 !important;
+    color: #333333 !important;
+  }
+</style>
+
+<script>
+
+  /* eslint-disable require-jsdoc */
+  /* eslint-disable camelcase */
+  /* eslint-disable no-unused-vars */
+  waitFor(function () {
+    return true;
+  }, attachEvents)();
+  if (
+    document.querySelectorAll(
+      '.lc-prsc-container-template-2 .tops-lc-prsc-content-template-2'
+    ).length
+  ) {
+    // console.log('input0: ', input0);
+    // trackVisibleProducts(input0);
+  }
+  /**
+     * Extracts product details from the element
+     * @param {Element} item - DOM element with product (link element)
+     * @return {{
+     *  price: string,
+     *  name: string,
+     *  id: string,
+     *  position: number,
+     *  category: string,
+     *  brand: string,
+     *  list: string
+     * }}
+     * product details
+     */
+  function extractProductDetails(item) {
+    var el = item;
+    var slide = el.closest('li');
+    var container = el.closest('div[id^="mt-slider"]');
+    var list = container.querySelector('h2').textContent;
+    var name = el
+      .querySelector('[data-product-name]')
+      .getAttribute('data-product-name');
+    var category = el.getAttribute('data-product-type').split('|').pop().trim();
+    var id = el.getAttribute('data-item-group-id');
+    var brand = el.getAttribute('data-brand');
+    var priceNode = el.querySelector('[data-price]');
+    var salePriceNode = el.querySelector('[data-sale-price]');
+    var price =
+      salePriceNode.getAttribute('data-sale-price') ||
+      priceNode.getAttribute('data-price');
+    var position = slide.getAttribute('data-slide') * 1 + 1;
+    return {
+      name: name,
+      id: id,
+      price: price,
+      brand: brand,
+      category: category,
+      position: position,
+      list: list,
+    };
+  }
+  /**
+     * Adds event for clicking on product and slider buttons
+     * @return {void}
+     */
+  function attachEvents() {
+    const anchorLinks = document.querySelectorAll(
+      'a.mt-button'
+    );
+    anchorLinks.forEach((anchorLink) => {
+      anchorLink.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const parent_sku = e.currentTarget.getAttribute('data-parentsku');
+        const child_sku = e.currentTarget.getAttribute('data-childsku');
+        const product_id = e.currentTarget.getAttribute('data-productid');
+
+
+        window.launchASOQuickView({
+          item: {
+            other_client_item_ids: {
+              identifiers: {
+                parent_sku: parent_sku,
+                catentry_id: product_id,
+                sku: child_sku,
+                skus: [child_sku],
+              },
+            },
+            sku: child_sku,
+            skus: [child_sku],
+          },
+        });
+      });
+    });
+  }
+  /**
+     * Handles click on product in slider
+     * @param {Element} el - product link element
+     * @return {void}
+     */
+  function handleProductClickEvent(el) {
+    var product = extractProductDetails(el.target.closest('a'));
+    sendProductClickEvent(
+      product.name,
+      product.id,
+      product.price,
+      product.brand,
+      product.category,
+      product.position,
+      product.list
+    );
+  }
+  /**
+     * Tracks product from vieweport
+     * @param {Integer} input0
+     * @return {void}
+     */
+  function trackVisibleProducts(input0) {
+    var products = getVisibleProducts(input0);
+    var impressions = [];
+    for (var i = 0; i < products.length; i += 1) {
+      var details = extractProductDetails(products[i]);
+      impressions.push({
+        name: details.name,
+        id: details.id,
+        price: details.price,
+        brand: details.brand,
+        category: details.category,
+        list: details.list,
+        position: details.position,
+      });
+    }
+    sendVisibleProductsEvent(impressions);
+  }
+  /**
+     * Sends event with visible products
+     * @param {Array<Object>} impressions - list of products in view port
+     * @return {void}
+     */
+  function sendVisibleProductsEvent(impressions) {
+    setTimeout(
+      () => {
+        if (window.dataLayer && window.dataLayer.push) {
+          window.dataLayer.push({
+            ecommerce: {
+              currencyCode: 'USD',
+              impressions: impressions,
+            },
+          });
+        }
+      },
+      2000,
+      impressions
+    );
+  }
+
+  /**
+     * Sends event with selected products
+     * @param {string} name - product name
+     * @param {string} id - product id
+     * @param {string} price - product price
+     * @param {string} brand - product brand
+     * @param {string} category - product category
+     * @param {number} position - product position
+     * @param {string} title - recommendations title
+     * @return {void}
+     */
+  function sendProductClickEvent(
+    name,
+    id,
+    price,
+    brand,
+    category,
+    position,
+    title
+  ) {
+    if (window.dataLayer && window.dataLayer.push) {
+      window.dataLayer.push({
+        event: 'productClick',
+        ecommerce: {
+          click: {
+            actionField: { list: 'listname' },
+            products: [
+              {
+                name: name,
+                id: id,
+                price: price,
+                brand: brand,
+                category: category,
+                list: title,
+                position: position,
+              },
+            ],
+          },
+        },
+      });
+    }
+  }
+
+  /**
+     * Validates if element visible on the page
+     * @param {Element} el - DOM element to validate
+     * @return {boolean} - true if element visible on the page
+     */
+  function isElementInViewport(el) {
+    var rect = el.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+  /**
+     * Collects list of visible products
+     * @param {Integer} input0
+     * @return {Array} - list of elements
+     */
+  function getVisibleProducts(input0) {
+    var actionId = input0.id;
+    return [...document.querySelectorAll('#' + actionId + ' li[data-slide]')]
+      .filter(function (el) {
+        return isElementInViewport(el);
+      })
+      .map((element) => element.querySelector('a'));
+  }
+  /**
+     * @param {Function} condition Condition to wait for (must return truty/falsy)
+     * @param {Function} callback Callback to run when the condition is met
+     * @param {number} opt_timeout Optoinal timeout, defaults to 8000
+     * @return {void}
+     */
+  function waitFor(condition, callback, opt_timeout) {
+    var stop = false;
+    // eslint-disable-next-line no-param-reassign
+    timeout = typeof opt_timeout === 'undefined' ? 8000 : opt_timeout;
+    window.setTimeout(function () {
+      stop = true;
+    }, timeout);
+    // eslint-disable-next-line consistent-return
+    return function innerWaitFor() {
+      if (condition()) return callback();
+      if (stop) return null;
+      window.setTimeout(innerWaitFor, 50);
+    };
+  }
+  // Get all accordion items
+  const accordionItems = document.querySelectorAll('.mt-accordion-item');
+
+  // Function to update 'any-expanded' class on relevant elements
+  function updateAnyExpandedClass() {
+    // Check if any accordion item has the 'expanded' class
+    const anyExpanded = Array.from(accordionItems).some((item) => item.classList.contains('expanded'));
+
+    // Select elements with IDs starting with 'mt-slider' and their 'li' elements
+    const elements = document.querySelectorAll('[id^=mt-slider] li');
+
+    // Toggle the class on each matching element based on the presence of 'expanded' class
+    elements.forEach(function (element) {
+      if (anyExpanded) {
+        element.classList.add('any-expanded');
+      } else {
+        element.classList.remove('any-expanded');
+      }
+    });
+  }
+
+  // Initialize the 'any-expanded' class based on the initial state
+  updateAnyExpandedClass();
+
+  // Loop through each accordion item and add event listener
+  accordionItems.forEach(function (item) {
+    const header = item.querySelector('.mt-accordion-header');
+    const content = item.querySelector('.mt-accordion-content');
+
+    // Add click event listener to the header
+    header.addEventListener('click', function () {
+      // Toggle the 'expanded' class on the accordion item
+      item.classList.toggle('expanded');
+
+      // Update the 'any-expanded' class on relevant elements
+      updateAnyExpandedClass();
+
+      // Toggle the display of the content
+      if (content.style.display === 'block') {
+        content.style.display = 'block';
+      } else {
+        content.style.display = 'block';
+      }
+    });
+  });
+
+
+
+</script>
